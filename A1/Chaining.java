@@ -1,9 +1,9 @@
 import java.io.*;
 import java.util.*;
 
-
-// Lost progress
 public class Chaining {
+
+    // h(k) = ((A · k) mod 2^w) >> (w − r)
     
      public int m; // number of SLOTS 
      public int A; // the default random number
@@ -33,13 +33,13 @@ public class Chaining {
          return (int) Math.pow(2, w);
      }
      //generate a random number in a range (for A)
-     public static int generateRandom(int min, int max, int seed) {     
-         Random generator = new Random(); 
-                 if(seed>=0){
+    public static int generateRandom(int min, int max, int seed) {     
+        Random generator = new Random(); 
+                if(seed>=0){
                     generator.setSeed(seed);
-                 }
-         int i = generator.nextInt(max-min-1);
-         return i+min+1;     
+                }
+        int i = generator.nextInt(max-min-1);
+        return i+min+1;     
     }
 
 
@@ -48,28 +48,35 @@ public class Chaining {
     /**Implements the hash function h(k)*/
     public int chain (int key) {
         // TODO: implement this and change the return statement
-	int hash;
-        return -1;
+        int hash = ((A*key) % power2(w)) >> (w-r);
+        return hash;
     }
         
     
     /**Inserts key k into hash table. Returns the number of collisions encountered*/
     public int insertKey(int key){
         //TODO: implement this and change the return statement
-        return -1;
-
+        if (key < 0) {
+            return -1;
+        }
+        int hash = chain(key);
+        if (Table.get(hash).contains(key)) {
+            return 0;
+        } else {
+            Table.get(hash).add(key);
+            return Table.get(hash).size()-1;
+        }
     }
 
     
     
     /**Sequentially inserts a list of keys into the HashTable. Outputs total number of collisions */
-    public int insertKeyArray (int[] keyArray){
+    public int insertKeyArray (int[] keyArray) {
         int collision = 0;
         for (int key: keyArray) {
             collision += insertKey(key);
         }
         return collision;
     }
-
 
 }
