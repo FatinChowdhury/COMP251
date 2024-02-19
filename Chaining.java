@@ -1,6 +1,8 @@
 import java.io.*;
 import java.util.*;
 
+
+// Lost progress
 public class Chaining {
     
      public int m; // number of SLOTS 
